@@ -31,16 +31,15 @@ def volt_temp_logger(volts, lidar_id):
     A simple level logger based on the voltages and lidar_id.
     """
     # Round the voltage into xx.xx
-    log_volts = volts
-    round(log_volts, 2)
+    volts = round(volts, 2)
     if volts >= 11.5 and volts <= 12.5:
-        logger.info('Lidar:{} voltage:{}'.format(lidar_id, log_volts))
+        logger.info('Lidar:{} voltage:{}'.format(lidar_id, volts))
     elif volts >= 10.0 and volts < 11.5:
-        logger.warning('Lidar:{} voltage:{}'.format(lidar_id, log_volts))
+        logger.warning('Lidar:{} voltage:{}'.format(lidar_id, volts))
     elif volts >= 9.0 and volts < 10.0:
-        logger.error('Lidar:{} voltage:{}'.format(lidar_id, log_volts))
+        logger.error('Lidar:{} voltage:{}'.format(lidar_id, volts))
     else:
-        logger.critical('Lidar:{} voltage:{}'.format(lidar_id, log_volts))
+        logger.critical('Lidar:{} voltage:{}'.format(lidar_id, volts))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Velodyne LiDAR voltage logger.')
