@@ -24,6 +24,6 @@ pip install requests
 ```
 
 ### TODO
-- [] A simple voltage viewer    
+- [x] A simple voltage viewer    
 - [] Log other diag parameters    
 - [] Support more than two LiDARs
