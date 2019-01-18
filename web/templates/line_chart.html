@@ -12,6 +12,25 @@
     <canvas id="myChart" width="600" height="400"></canvas>
     <p id="pointSelected">Point selected:</p>
 
+    <!-- Some ugly but simple Summary Boxes -->
+    <div id="main" style="width:100%;">
+      <div id="critical" style="width:30%;float:left;">
+        {% for item in critical_logs %}
+        <b>"{{item}}"</b><br />
+        {% endfor %}
+      </div>
+      <div id="error" style="width:30%;float:left;">
+        {% for item in error_logs %}
+        "{{item}}"<br />
+        {% endfor %}
+        </div>
+      <div id="warning" style="width:30%;float:left;">
+        {% for item in warning_logs %}
+        "{{item}}"<br />
+        {% endfor %}
+      </div>
+    </div>
+
     <script>
       // Global parameters:
       // do not resize the chart canvas when its container does (keep at 600x400px)

@@ -37,17 +37,19 @@ class Sensor_datasets(object):
 
 @app.route("/")
 def line_chart():
-    global s_datasets_dicts, x
+    global s_datasets_dicts, x, c_log, e_log, w_log
     if len(s_datasets_dicts) == 1:
         return render_template('line_chart.html', values1=s_datasets_dicts.values()[0].values, \
-        legend1=s_datasets_dicts.values()[0].legend, labels = x)
+        legend1=s_datasets_dicts.values()[0].legend, labels = x, critical_logs=c_log, error_logs=e_log,\
+        warning_log=w_log)
     else:
         # return render_template('line_chart.html', values1=s_datasets_dicts.values()[0].pair, \
         # legend1=s_datasets_dicts.values()[0].legend, labels = x, \
         # values2=s_datasets_dicts.values()[1].pair, legend2=s_datasets_dicts.values()[1].legend)
         return render_template('line_chart.html', values1=s_datasets_dicts.values()[0].values, \
         legend1=s_datasets_dicts.values()[0].legend, labels = x, \
-        values2=s_datasets_dicts.values()[1].values, legend2=s_datasets_dicts.values()[1].legend)
+        values2=s_datasets_dicts.values()[1].values, legend2=s_datasets_dicts.values()[1].legend, \
+        critical_logs=c_log, error_logs=e_log, warning_logs=w_log)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Webserver for LiDAR temperature logs.')
@@ -56,6 +58,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     s_datasets_dicts = {}
     x = [] # time stamp
+    c_log = []
+    e_log = []
+    w_log = []
     """
     TODO: Not yet clear about the logic.
     """
@@ -86,6 +91,12 @@ if __name__ == "__main__":
                 s_datasets_dicts[s_id] = Sensor_datasets(legend='{} {} {}'.format(s_type,s_id,s_p), \
                     values=[], labels=[])
             x.append(date+' '+time)
+            if log_level == 'CRITICAL':
+                c_log.append(l)
+            elif log_level == 'ERROR':
+                e_log.append(l)
+            elif log_level == 'WARNING':
+                w_log.append(l)
             # s_datasets_dicts[s_id].pair.append(Sensor_data(date+' '+time, s_v))
             ## Adding blank gaps to the other line
             if args.num >=2:
